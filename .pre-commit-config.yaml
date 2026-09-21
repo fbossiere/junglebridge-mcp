@@ -1,0 +1,44 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff
+        name: Ruff lint
+        entry: uv run --locked ruff check
+        language: system
+        types_or: [python, pyi]
+      - id: ruff-format
+        name: Ruff format
+        entry: uv run --locked ruff format --check
+        language: system
+        types_or: [python, pyi]
+      - id: mypy
+        name: mypy
+        entry: uv run --locked mypy
+        language: system
+        pass_filenames: false
+        types_or: [python, pyi]
+      - id: bandit
+        name: Bandit
+        entry: uv run --locked bandit -c pyproject.toml -r src
+        language: system
+        pass_filenames: false
+        types: [python]
+      - id: detect-private-key
+        name: Detect private keys
+        entry: uv run --locked detect-private-key
+        language: system
+        types: [text]
+      - id: check-added-large-files
+        name: Block oversized files
+        entry: uv run --locked check-added-large-files --maxkb=500
+        language: system
+      - id: check-yaml
+        name: Check YAML
+        entry: uv run --locked check-yaml
+        language: system
+        types: [yaml]
+      - id: check-toml
+        name: Check TOML
+        entry: uv run --locked check-toml
+        language: system
+        types: [toml]

@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling==1.32.4"]
+build-backend = "hatchling.build"
+
+[project]
+name = "junglebridge-mcp"
+version = "0.1.0.dev0"
+description = "Local MCP foundation for Welcome to the Jungle recruitment workflows"
+readme = "README.md"
+requires-python = ">=3.13,<3.15"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+classifiers = ["Development Status :: 1 - Planning", "Programming Language :: Python :: 3.13", "Programming Language :: Python :: 3.14"]
+dependencies = ["fastmcp==4.0.5", "pydantic==2.13.5"]
+
+[dependency-groups]
+dev = [
+    "ruff==0.16.8",
+    "bandit[toml]==1.9.4",
+    "mypy==2.3.1",
+    "pytest==9.1.1",
+    "pytest-asyncio==1.4.0",
+    "pytest-cov==7.1.0",
+    "pre-commit==4.6.2",
+    "pre-commit-hooks==6.0.0",
+    "pip-audit==2.10.1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/junglebridge_mcp"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "S", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+files = ["src", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "--strict-markers --strict-config --cov=junglebridge_mcp --cov-report=term-missing"
+
+[tool.bandit]
+targets = ["src"]
+exclude_dirs = ["tests", ".venv"]
+
+[project.scripts]
+junglebridge-mcp = "junglebridge_mcp.cli:main"
