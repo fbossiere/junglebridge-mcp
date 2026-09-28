@@ -1,5 +1,5 @@
 FROM node:22-bookworm-slim AS node
-FROM ghcr.io/astral-sh/uv:0.12.17 AS uv
+FROM ghcr.io/astral-sh/uv:0.12.19 AS uv
 FROM mcr.microsoft.com/devcontainers/python:1-3.13-bookworm
 
 COPY --from=uv /uv /uvx /usr/local/bin/
